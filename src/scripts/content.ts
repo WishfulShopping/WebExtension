@@ -1,4 +1,4 @@
-import type { Message, Response, Image, Bookmark } from "src/types";
+import Types from "src/types";
 
 // You may need to use relative path import.
 // import { } from "../constants";
@@ -10,21 +10,21 @@ console.log("content script");
 // document.querySelector("#some-id");
 
 // wait sendMessage
-chrome.runtime.onMessage.addListener((request: Message, sender, sendResponse: (data: Response)=>void) => {
+chrome.runtime.onMessage.addListener((request: Types.Message, sender, sendResponse: (data: Types.Response)=>void) => {
   if (request.action === "getId") {
     // eslint-disable-next-line no-console
     console.log("onMessage: ", request, sender, sendResponse);
     
-    const body = {} as Bookmark;
+    const body = {} as Types.Bookmark;
     body.url = window.location.toString();
     body.html = document.documentElement.outerHTML;
     body.images = [];
-    [].slice.call(document.images).map( (img: Image) =>{
+    [].slice.call(document.images).map( (img: Types.Image) =>{
         img.area = img.naturalHeight*img.naturalWidth;
         return img;
     }).filter(img=>{
         return img.area>10000;
-    }).sort((a:Image, b:Image)=>{
+    }).sort((a:Types.Image, b:Types.Image)=>{
         return b.area - a.area;
     }).slice(
         0, 20
