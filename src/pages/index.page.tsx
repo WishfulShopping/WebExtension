@@ -4,10 +4,10 @@ import Link from "next/link";
 import { Layout } from "src/layout";
 
 // chrome APIを使用するためdynamic importし、browser側でのみ読み込まれるようにする
-const Button = dynamic(
+const Panel = dynamic(
   async () => {
-    const module = await import("src/components/Button");
-    return module.Button;
+    const module = await import("src/components/Panel");
+    return module.Panel;
   },
   {
     ssr: false,
@@ -21,7 +21,7 @@ const IndexPage: CustomNextPage = () => {
   return (
     <div>
       <h1 className="text-2xl font-bold whitespace-nowrap">Chrome Extension Template</h1>
-      <Button />
+      <Panel />
       <div>
         <Link href="/sample">
           <a className="text-blue-500 underline">to sample page</a>

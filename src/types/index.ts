@@ -6,13 +6,14 @@ namespace Types {
     naturalWidth: number; 
   };
   export type Message = {
-    action: "getId";
+    action: string;
   };
 
   export type Response = {
     id: string;
+    website: string;
     updatedAt: Date;
-    data?: Bookmark;
+    data?: Bookmark|Wishlist;
     error?: string;
   };
 
@@ -21,6 +22,8 @@ namespace Types {
     html: string;
     images: string[];
   }
+
+  export type Wishlist = any;
 };
 
 

@@ -1,21 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Bookmark } from "src/components/Bookmark";
 import type Types from "src/types";
 
-export const Button: React.VFC = () => {
-  const [currentTab, setCurrentTab] = useState<number>();
+export const AddButton = (props: { currentTab: number }) => {
+  const currentTab = props.currentTab;
   const [bookmark, setBookmark] = useState<Types.Bookmark>();
   const [isGranted, setIsGranted] = useState<boolean>(false);
   const origin = 'https://wishlist.netpascal.site/api/url/add/cc2d98ec63dde1c2cb805a4a647cc53b';
 
-  useEffect(() => {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      // current tab info
-    const currentTab = tabs[0];
-      const currentTabId = currentTab.id ?? 0;
-      setCurrentTab(currentTabId);
-    });
-  }, []);
 
   const handleClick = () => {
     // content script communication
@@ -46,10 +38,9 @@ export const Button: React.VFC = () => {
     });
   };
 
-  if (!currentTab) return <div>Loading...</div>;
   if (!bookmark || !isGranted) return (
     <button onClick={handleClick} className="block p-2 mx-auto rounded border">
-      Click Me!
+      Add this page as wish
     </button>
   );
 
