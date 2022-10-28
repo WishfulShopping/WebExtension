@@ -4,4 +4,20 @@ export type Message = {
 
 export type Response = {
   id: string;
+  updatedAt: Date;
+  data?: Bookmark;
+  error?: string;
+};
+
+export type Bookmark = {
+  url: string;
+  html: string;
+  images: string[];
+}
+
+export type Image = {
+  area: number;
+  src: string;
+  naturalHeight: number; 
+  naturalWidth: number; 
 };

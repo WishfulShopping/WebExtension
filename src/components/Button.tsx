@@ -2,25 +2,29 @@ import { useEffect, useState } from "react";
 import type { Message, Response } from "src/types";
 
 export const Button: React.VFC = () => {
-  const [state, setState] = useState<Response>({ id: "" });
+  const [currentTab, setCurrentTab] = useState<number>();
   useEffect(() => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       // current tab info
       const currentTab = tabs[0];
       const currentTabId = currentTab.id ?? 0;
-
-      // content script communication
-      chrome.tabs.sendMessage<Message>(currentTabId, { action: "getId" }, (res: Response) => {
-        setState(res);
-      });
+      setCurrentTab(currentTabId);
     });
   }, []);
 
   const handleClick = () => {
-    alert(state.id);
+    // content script communication
+    if (!currentTab) {
+      return;
+    }
+    chrome.tabs.sendMessage<Message>(currentTab, { action: "getId" }, (res: Response) => {
+        alert(res.updatedAt + " : " + res.id);
+        // eslint-disable-next-line no-console
+        console.log(res.data);
+    });
   };
 
-  if (!state) return <div>Loading...</div>;
+  if (!currentTab) return <div>Loading...</div>;
 
   return (
     <button onClick={handleClick} className="block p-2 mx-auto rounded border">
