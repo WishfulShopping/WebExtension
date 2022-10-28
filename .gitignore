@@ -42,3 +42,5 @@ yarn-error.log*
 # extensions
 extensions/dist
 extensions/*.js
+
+/.history
