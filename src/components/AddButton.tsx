@@ -1,12 +1,13 @@
+import type { ReactNode} from "react";
 import { useState } from "react";
 import { Bookmark } from "src/components/Bookmark";
 import type Types from "src/types";
 
-export const AddButton = (props: { currentTab: number }) => {
+export const AddButton = (props: { currentTab: number, url: string, children?:ReactNode }) => {
   const currentTab = props.currentTab;
   const [bookmark, setBookmark] = useState<Types.Bookmark>();
   const [isGranted, setIsGranted] = useState<boolean>(false);
-  const origin = 'https://wishlist.netpascal.site/api/url/add/cc2d98ec63dde1c2cb805a4a647cc53b';
+  const origin = props.url.replace('/list', '/api/url/add').replace('//api', '/api');
 
 
   const handleClick = () => {
@@ -39,8 +40,8 @@ export const AddButton = (props: { currentTab: number }) => {
   };
 
   if (!bookmark || !isGranted) return (
-    <button onClick={handleClick} className="block p-2 mx-auto rounded border">
-      Add this page as wish
+    <button title="Add this page as wish" onClick={handleClick} onKeyDown={handleClick} >
+       {props.children}
     </button>
   );
 

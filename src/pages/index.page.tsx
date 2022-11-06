@@ -1,6 +1,5 @@
 import type { CustomNextPage } from "next";
 import dynamic from "next/dynamic";
-import Link from "next/link";
 import { Layout } from "src/layout";
 
 // chrome APIを使用するためdynamic importし、browser側でのみ読み込まれるようにする
@@ -20,13 +19,8 @@ const Panel = dynamic(
 const IndexPage: CustomNextPage = () => {
   return (
     <div>
-      <h1 className="text-2xl font-bold whitespace-nowrap">Chrome Extension Template</h1>
+      <h1 className="text-2xl font-bold whitespace-nowrap">Wishlist souveraine</h1>
       <Panel />
-      <div>
-        <Link href="/sample">
-          <a className="text-blue-500 underline">to sample page</a>
-        </Link>
-      </div>
     </div>
   );
 };

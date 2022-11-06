@@ -1,3 +1,5 @@
+import { mdiTrayArrowUp } from '@mdi/js';
+import Icon from '@mdi/react';
 import type Types from "src/types";
 
 export const ImportButton = (props: { currentTab: number }) => {
@@ -13,8 +15,8 @@ export const ImportButton = (props: { currentTab: number }) => {
   };
 
   return (
-    <button onClick={handleClick} className="block p-2 mx-auto rounded border">
-      Import wishlist present in this website
+    <button title="Import wishlist present in this website" onClick={handleClick} className="inline p-2 mx-auto rounded border">
+      <Icon path={mdiTrayArrowUp} className="mx-auto w-12 h-12" />
     </button>
   );
 };

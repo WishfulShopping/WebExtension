@@ -5,6 +5,7 @@ import Types from "src/types";
 
 // eslint-disable-next-line no-console
 console.log("content script");
+const localStorageKey = "history";
 
 // If you want to get the DOM of the open page, you can do it here.
 // document.querySelector("#some-id");
@@ -36,7 +37,6 @@ chrome.runtime.onMessage.addListener((request: Types.Message, sender, sendRespon
 
     sendResponse({ id: document.title, website: website, updatedAt: new Date(), data: body });
   } else if (request.action === "ImportWishlist") {
-    const localStorageKey = "history";
     const history = JSON.parse(localStorage.getItem(localStorageKey) ?? "{}");
     chrome.storage.local.get([localStorageKey], (previous) => {
         // eslint-disable-next-line no-console
@@ -47,6 +47,9 @@ chrome.runtime.onMessage.addListener((request: Types.Message, sender, sendRespon
       chrome.storage.local.set({history: result}, ()=>{});
     });
     sendResponse({ id: "Wishlists", website: website, updatedAt: new Date() , data:  history});
+  } else if (request.action === "showImport") {
+    const showImport = localStorage.getItem(localStorageKey) ? true : false;
+    sendResponse({ id: "Wishlists", website: website, updatedAt: new Date() , data:  showImport});
   } else {
     sendResponse({ id: "No Action", website: website, updatedAt: new Date() });
   }

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "version": "0.1",
-  "name": "Chrome Extension Template",
+  "version": "0.0.1",
+  "name": "Wishfull Shopping",
   "description": "description",
   "action": {
     "default_popup": "./dist/index.html"
@@ -15,5 +15,10 @@
   "background": {
     "service_worker": "background.js"
   },
-  "permissions": ["tabs", "storage"]
+  "permissions": ["tabs", "storage"],
+  "icons": {
+    "96": "icon.png",
+    "128": "icon@2x.png",
+    "256": "icon@4x.png"
+  }
 }
