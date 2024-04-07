@@ -119,6 +119,7 @@ async function buildHtmlPage(name: string, entry: string, outdir: string, dev = 
       ".svg": "dataurl",
       ".json": "json",
     },
+    assetNames: '[name]',
     plugins: [
       html({
         entryNames: "[name]-[hash]",
