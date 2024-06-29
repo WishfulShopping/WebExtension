@@ -1,12 +1,12 @@
 {
-  "name": "browser-extension",
-  "displayName": "Browser Extension",
+  "name": "wishful-shopping-webextension",
+  "displayName": "Wishful Shopping",
   "version": "2.0.0",
-  "description": "Browser Extension Boilerplate",
+  "description": "Bookmark page metadata and manage them in Pouchdb",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/debdut/browser-extension.git"
+    "url": "https://github.com/WishfulShopping/WebExtension.git"
   },
   "scripts": {
     "start": "node --loader ts-node/esm scripts/build.ts --dev",
