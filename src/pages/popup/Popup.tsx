@@ -1,5 +1,6 @@
 import React from "react";
 import { Settings, Visibility } from '@mui/icons-material';
+import { AddCurrentTab } from './component/AddCurrentTab';
 import { Wishlist } from "./types";
 
 export default function Popup(): JSX.Element {
@@ -33,9 +34,7 @@ export default function Popup(): JSX.Element {
         </div>
         {wishlists.map(wishlist => <>
           <div className="flex space-x-1 mb-6 text-sm font-medium">
-            <button className="hover:bg-gray-600 bg-gray-500 w-52 h-16 font-semibold rounded-md text-white"  title="Add this page as wish">
-              Add to default wishlist
-            </button>
+            <AddCurrentTab wishlist={wishlist} />
             <div className="flex-col">
               <a
                 href={`/options/index.html#/${wishlist.id}`}

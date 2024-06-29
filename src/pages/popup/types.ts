@@ -7,3 +7,7 @@ export type Wishlist = {
     username: string,
     password: string,
 };
+
+export type Bookmark = { 
+    [x:string]:string
+};
