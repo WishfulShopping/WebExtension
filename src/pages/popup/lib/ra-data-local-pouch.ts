@@ -169,7 +169,11 @@ export default (): DataProvider => {
                 const result:DeleteManyResult = {data:params.ids};
                 return result;
             }),
-        destroy: (resource: string) =>getStoreByName(resource).destroy()
+        destroy: (resource: string) =>getStoreByName(resource).destroy(),
+        info: (resource: string, options?: PouchDB.Configuration.DatabaseConfiguration) => getStoreByName(resource, options).info(),
+        sync: (localResource: string, remoteResource: string, options?: PouchDB.Configuration.DatabaseConfiguration) => {
+            return getStoreByName(localResource).sync(getStoreByName(remoteResource, options), {live: true})
+        }
     };
 };
 

@@ -26,6 +26,8 @@ export default (): DataProvider => {
                     return params;
                 },
             },
-        ])
+        ]),
+        info: pouchProvider.info.bind(pouchProvider),
+        sync: pouchProvider.sync.bind(pouchProvider),
     };
 }
