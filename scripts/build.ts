@@ -137,9 +137,25 @@ async function buildHtmlPage(name: string, entry: string, outdir: string, dev = 
     ],
   });
 
+  fixCssPaths(outdir, name)
+
   console.timeEnd(prompt);
   
   return out;
+}
+
+
+function fixCssPaths(outDir: string, name: string): void {
+
+  const pageFiles = fs.readdirSync(resolve(outDir, name));
+  for (const file of pageFiles) {
+    if (file.endsWith(".css")) {
+      fse.copySync(
+        resolve(outDir, name, file),
+        resolve(outDir, name, file).replace(/-[A-z0-9]*/, '')
+      );
+    }
+  }
 }
 
 async function buildJSPage(name: string, entry: string, outdir: string, dev = false) {
