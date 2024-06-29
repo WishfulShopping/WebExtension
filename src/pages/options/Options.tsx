@@ -5,6 +5,7 @@ import startDataProvider from '../popup/lib/ra-data-local-combined';
 import { Settings } from '@mui/icons-material';
 import { WishlistForm } from './component/wishlist/WishlistForm';
 import { Wishlist } from '../popup/types';
+import { BookmarkList } from './component/wishlist/bookmark/BookmarkList';
 
 export default function Option(): JSX.Element {
   const [dataProvider, setDataProvider] = React.useState<DataProvider>();
@@ -24,6 +25,6 @@ export default function Option(): JSX.Element {
 
   return <Admin dataProvider={dataProvider}>
     <Resource name="wishlist" icon={Settings} list={() => <ListGuesser exporter={false} />} edit={() => <Edit><WishlistForm /></Edit>} show={ShowGuesser} create={() => <Create><WishlistForm /></Create>} />
-    {wishlists.map(wishlist => <Resource key={wishlist.id} options={{ label: `Wishlist ${wishlist.name}` }} name={wishlist.id} list={ListGuesser}/>)}
+    {wishlists.map(wishlist => <Resource key={wishlist.id} options={{ label: `Wishlist ${wishlist.name}` }} name={wishlist.id} list={BookmarkList}/>)}
   </Admin>
 }
