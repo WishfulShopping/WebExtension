@@ -2,7 +2,7 @@ import React from "react";
 import { Settings, Visibility } from '@mui/icons-material';
 import { AddCurrentTab } from './component/AddCurrentTab';
 import { DataProvider, GetListParams  } from 'react-admin';
-import startDataProvider from '../popup/lib/ra-data-local-sync-storage';
+import startDataProvider from './lib/ra-data-local-combined';
 import { Wishlist } from "./types";
 
 export default function Popup(): JSX.Element {
@@ -48,7 +48,7 @@ export default function Popup(): JSX.Element {
         </div>
         {wishlists.map(wishlist => <>
           <div className="flex space-x-1 mb-6 text-sm font-medium">
-            <AddCurrentTab wishlist={wishlist} />
+            <AddCurrentTab wishlist={wishlist} dataProvider={dataProvider}/>
             <div className="flex-col">
               <a
                 href={`/options/index.html#/${wishlist.id}`}

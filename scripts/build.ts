@@ -109,6 +109,9 @@ async function buildHtmlPage(name: string, entry: string, outdir: string, dev = 
   const out = await build({
     entryPoints: [entry],
     bundle: true,
+    define: {
+      "global": 'window'
+    },
     outdir: resolve(outdir, name),
     sourcemap: dev,
     minify: true,

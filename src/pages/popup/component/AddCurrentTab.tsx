@@ -1,9 +1,8 @@
 import React from 'react';
 import { AddButton } from './AddButton';
-import { Wishlist } from '../types';
 
 
-export function AddCurrentTab ({wishlist}:{wishlist:Wishlist}) {
+export function AddCurrentTab (props) {
   const [currentTab, setCurrentTab] = React.useState<number>();
 
   React.useEffect(() => {
@@ -17,5 +16,9 @@ export function AddCurrentTab ({wishlist}:{wishlist:Wishlist}) {
 
   }, [currentTab]);
 
-  return <AddButton wishlist={wishlist} currentTab={currentTab}/>;
+  if (typeof(currentTab) == "undefined") {
+    return <></>;
+  }
+
+  return <AddButton currentTab={currentTab} {...props}/>;
 }

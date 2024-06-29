@@ -2,8 +2,9 @@ import React from "react";
 import { useState } from "react";
 import { Success } from "./Success";
 import { Wishlist } from "../types";
+import { DataProvider } from "react-admin";
 
-export const AddButton = ({currentTab, wishlist} : {currentTab: chrome.tabs.Tab, wishlist: Wishlist}) => {
+export const AddButton = ({currentTab, wishlist, dataProvider} : {currentTab: number, wishlist: Wishlist, dataProvider:DataProvider}) => {
   const [bookmark, setBookmark] = useState();
 
 
@@ -26,6 +27,6 @@ export const AddButton = ({currentTab, wishlist} : {currentTab: chrome.tabs.Tab,
   );
 
   return (
-    <Success  wishlist={wishlist} bookmark={bookmark}/>
+    <Success  wishlist={wishlist} bookmark={bookmark} dataProvider={dataProvider}/>
   );
 };
