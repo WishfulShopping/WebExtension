@@ -1,15 +1,29 @@
 import React from "react";
 import { Settings, Visibility } from '@mui/icons-material';
 import { AddCurrentTab } from './component/AddCurrentTab';
+import { DataProvider, GetListParams  } from 'react-admin';
+import startDataProvider from '../popup/lib/ra-data-local-sync-storage';
 import { Wishlist } from "./types";
 
 export default function Popup(): JSX.Element {
   const [wishlists, setWishlists] = React.useState<Wishlist[]>([]);
+  const [dataProvider, setDataProvider] = React.useState<DataProvider>();
 
   React.useEffect(() => {
-    const defaultWishlist = { name: "Default", need_authentification: false, url: "", username: "", password: "" };
-     setWishlists([defaultWishlist]);
-  }, []);
+    if (typeof(dataProvider) == "undefined") {
+      setDataProvider(startDataProvider());
+    } else {
+      const listParam:GetListParams = {filter:null, pagination:{page:1,perPage:1000}, sort:{field:"id", order:'DESC'}};
+      dataProvider.getList("wishlist", listParam).then(result=>{
+        if (result.data.length==0) {
+          const defaultWishlist = {name:"Default", need_authentification: false, url:"", username:"", password:""};
+          dataProvider.create("wishlist", {data: defaultWishlist});
+          result.data.push(defaultWishlist);
+        }
+        return result;
+      }).then(result=>setWishlists(result.data));
+    }
+  }, [dataProvider]);
   return (
     <div className="flex font-sans">
       <div className="flex-auto p-6">
