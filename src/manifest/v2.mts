@@ -25,6 +25,7 @@ function getManifestV2(pageDirMap: { [x: string]: any }): ManifestTypeV2 {
   if (pages.indexOf("options") > -1) {
     manifest.options_ui = {
       page: pageDirMap["options"],
+      open_in_tab: true,
     };
   }
 
