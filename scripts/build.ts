@@ -4,7 +4,7 @@ import { fileURLToPath } from "url";
 import { createRequire } from "node:module";
 
 import fse from "fs-extra";
-import { build } from "esbuild";
+import { BuildResult, build } from "esbuild";
 import { html } from "@esbuilder/html";
 import concurrently from "concurrently";
 import { GetInstalledBrowsers, BrowserPath } from "get-installed-browsers";
@@ -21,7 +21,6 @@ const __dirname = dirname(__filename);
 const RootDir = resolve(__dirname, "..");
 const SrcDir = resolve(RootDir, "src");
 const pagesDir = resolve(SrcDir, "pages");
-const AssetsDir = resolve(SrcDir, "assets");
 const OutDir = resolve(__dirname, "..", "dist");
 const PublicDir = resolve(__dirname, "..", "public");
 
@@ -49,8 +48,10 @@ function getPageEntry(folder: string) {
   }
 }
 
+type PageDirMap = { [x: string]: string|string[] };
+
 function getPageDirMap() {
-  const pageDirMap: { [x: string]: any } = {};
+  const pageDirMap: PageDirMap = {};
 
   pageDirs.forEach((folder) => {
     const pages = resolve(pagesDir, folder);
@@ -141,7 +142,7 @@ async function buildHtmlPage(name: string, entry: string, outdir: string, dev = 
   return out;
 }
 
-async function buildJSPage(name: string, entry: string, outdir: string, dev: boolean = false) {
+async function buildJSPage(name: string, entry: string, outdir: string, dev = false) {
   const prompt = `Building "${name}" from ${entry}:`;
   console.time(prompt);
 
@@ -184,7 +185,7 @@ function getDistPagePath(name: string, path: string, version: 2 | 3): string {
   const distExt = (ext === "html") ? "html" : "js";
   const fileNameWOExt = getName(fileName);
   const regex = new RegExp(
-    `${fileNameWOExt}(-[A-z0-9]*)?\.${distExt}`
+    `${fileNameWOExt}(-[A-z0-9]*)?.${distExt}`
   );
   
   const extDir = resolve(OutDir, `v${version}`);
@@ -229,15 +230,15 @@ async function CopyPublicFiles(version: 2 | 3) {
   console.timeEnd(prompt);
 }
 
-function BuildManifest(version: 2 | 3, pageDirMap: { [x: string]: any }) {
+function BuildManifest(version: 2 | 3, pageDirMap: PageDirMap) {
   const prompt = `Building manifest for v${version}`;
   console.time(prompt);
 
   const extDir = resolve(OutDir, `v${version}`);
-  const pageDistMap: { [x: string]: any } = {};
+  const pageDistMap: PageDirMap = {};
 
   for (const [name, entry] of Object.entries(pageDirMap)) {
-    const entryRelative = relative(RootDir, entry);
+    const entryRelative = relative(RootDir, entry as string);
     const pageDist = getDistPagePath(name, entryRelative, version);
     const cssDist = getDistCSSPath(name, entryRelative, version);
 
@@ -255,12 +256,12 @@ function BuildManifest(version: 2 | 3, pageDirMap: { [x: string]: any }) {
   console.timeEnd(prompt);
 }
 
-async function BuildPages(version: 2 | 3,  pageDirMap: { [x: string]: any }, dev: boolean = false) {
+async function BuildPages(version: 2 | 3,  pageDirMap: PageDirMap, dev = false) {
   const extDir = resolve(OutDir, `v${version}`);
-  const promises: Promise<any>[] = [];
+  const promises: Promise<BuildResult>[] = [];
 
   for (const [name, entry] of Object.entries(pageDirMap)) {
-    const entryRelative = relative(RootDir, entry);
+    const entryRelative = relative(RootDir, entry as string);
 
     promises.push(
       buildPage(name, entryRelative, extDir, dev)
@@ -270,7 +271,7 @@ async function BuildPages(version: 2 | 3,  pageDirMap: { [x: string]: any }, dev
   await Promise.all(promises);
 }
 
-async function BuildVersionedExt(versions: (2 | 3)[], dev: boolean = false) {
+async function BuildVersionedExt(versions: (2 | 3)[], dev = false) {
   const pageDirMap = getPageDirMap();
 
   if (versions.length === 0) {
@@ -353,7 +354,7 @@ async function DevVersionedExt(versions: (2 | 3)[]) {
   watch(SrcDir, { recursive: true }, async (event, filePath) => {
     const relativeFilePath = filePath.replace(SrcDir + sep, "");
 
-    let root = [relativeFilePath
+    const root = [relativeFilePath
       .split(sep)[0]];
     
     if (root[0] === "pages") {
@@ -547,7 +548,7 @@ function getCommand(command: string, args: Record<string, string | null>) {
 }
 
 function LaunchCommand(browser: BrowserPath, profileDir: string) {
-  let command = "web-ext run";
+  const command = "web-ext run";
   const args: Record<string, string | null> = {
     "start-url": "example.com",
     "profile-create-if-missing": null,

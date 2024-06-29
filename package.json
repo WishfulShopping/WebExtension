@@ -10,7 +10,9 @@
   },
   "scripts": {
     "start": "node --loader ts-node/esm scripts/build.ts --dev",
-    "build": "node --loader ts-node/esm scripts/build.ts"
+    "build": "node --loader ts-node/esm scripts/build.ts",
+    "lint": "eslint src/pages scripts",
+    "lint:fix": "eslint --fix --ext ts,tsx src/pages scripts"
   },
   "type": "module",
   "dependencies": {
