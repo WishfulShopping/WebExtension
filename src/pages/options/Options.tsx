@@ -6,7 +6,7 @@ import startDataProvider from '../popup/lib/ra-data-local-combined';
 import { Settings } from '@mui/icons-material';
 import { WishlistForm } from './component/wishlist/WishlistForm';
 import { Wishlist } from '../popup/types';
-import { BookmarkList } from './component/wishlist/bookmark/BookmarkList';
+import { BookmarkList } from './component/bookmark/BookmarkList';
 import { ImportWishlist } from './component/wishlist/ImportWishlist';
 import { WishlistListActions } from './component/wishlist/WishlistListActions';
 
