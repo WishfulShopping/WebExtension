@@ -152,7 +152,7 @@ function fixCssPaths(outDir: string, name: string): void {
 
   const pageFiles = fs.readdirSync(resolve(outDir, name));
   for (const file of pageFiles) {
-    if (file.endsWith(".css")) {
+    if (file.endsWith(".css") && /-[A-z0-9]*/.test(file)) {
       fse.copySync(
         resolve(outDir, name, file),
         resolve(outDir, name, file).replace(/-[A-z0-9]*/, '')
