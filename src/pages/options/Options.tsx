@@ -9,6 +9,7 @@ import { Wishlist } from '../popup/types';
 import { BookmarkList } from './component/bookmark/BookmarkList';
 import { ImportWishlist } from './component/wishlist/ImportWishlist';
 import { WishlistListActions } from './component/wishlist/WishlistListActions';
+import { WishlistEditActions } from './component/wishlist/WishlistEditActions';
 
 export default function Option(): JSX.Element {
   const [dataProvider, setDataProvider] = React.useState<DataProvider>();
@@ -27,7 +28,7 @@ export default function Option(): JSX.Element {
   if (typeof (dataProvider) == "undefined") return <p>Loading...</p>;
 
   return <Admin dataProvider={dataProvider}>
-    <Resource name="wishlist" icon={Settings} list={() => <ListGuesser actions={<WishlistListActions />} exporter={false} />} edit={() => <Edit><WishlistForm /></Edit>} show={ShowGuesser} create={() => <Create><WishlistForm /></Create>} />
+    <Resource name="wishlist" icon={Settings} list={() => <ListGuesser actions={<WishlistListActions />} exporter={false} />} edit={() => <Edit actions={<WishlistEditActions  />}><WishlistForm /></Edit>} show={ShowGuesser} create={() => <Create><WishlistForm /></Create>} />
     <CustomRoutes>
         <Route path="/import" element={<ImportWishlist />} />
     </CustomRoutes>
