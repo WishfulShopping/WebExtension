@@ -1,6 +1,7 @@
 import { DataProvider } from "react-admin";
 import { Bookmark, Wishlist } from "../types";
 import { useEffect, useState } from "react";
+import { Pouch } from "./Pouch";
 
 export const Success = ({bookmark, dataProvider, wishlist}:{bookmark:Bookmark, dataProvider:DataProvider, wishlist:Wishlist}) => {
 
@@ -28,5 +29,6 @@ export const Success = ({bookmark, dataProvider, wishlist}:{bookmark:Bookmark, d
     <span className="text-center align-bottom">
       { response.status } { response.title }
     </span>
+    <Pouch wishlist={wishlist} dataProvider={dataProvider} refresh={false}/>
   </div>;
 }

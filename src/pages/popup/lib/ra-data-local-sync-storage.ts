@@ -28,7 +28,13 @@ import { v4 as generateUid } from 'uuid';
  *
  */
 export default (): DataProvider => {
-    const storage = ((typeof browser !== 'undefined' && browser.storage) || (typeof chrome !== 'undefined' && chrome.storage)).local;
+    const fallback = {
+        local:{
+            set:(obj)=>{return Promise.resolve(Object.keys(obj).map(key=>localStorage.setItem(key, JSON.stringify(obj[key]))))},
+            get:(key:string)=>{return Promise.resolve({[key] : JSON.parse(localStorage.getItem(key)??"{}")})}
+        }
+    }
+    const storage = ((typeof browser !== 'undefined' && browser.storage) || (typeof chrome !== 'undefined' && chrome.storage) || fallback).local;
 
     /* eslint-disable @typescript-eslint/no-explicit-any */ 
     const DataProvider:DataProvider = {
@@ -84,7 +90,10 @@ export default (): DataProvider => {
                         })
         },
         updateMany: (resource: string, params: UpdateManyParams<any>) => storage.get(resource).then((value: any) => {
-            if (!value || typeof(value[resource])=="undefined") {
+            if (!value) {
+                value = {};
+            }
+            if (typeof(value[resource])=="undefined") {
                 value[resource] = {};
             }
             params.ids.map((id)=>{
@@ -108,6 +117,7 @@ export default (): DataProvider => {
             const id = params.data.id??`w${generateUid().substring(1)}`;
             const result:CreateResult = {data:{id:id, ...params.data}};
             const paramsMany: UpdateManyParams<any> = {ids: [id], data:params.data};
+            console.log(paramsMany);
             return this.updateMany(resource, paramsMany)
                        .then(()=>{
                             return result

@@ -10,6 +10,7 @@ import { BookmarkList } from './component/bookmark/BookmarkList';
 import { ImportWishlist } from './component/wishlist/ImportWishlist';
 import { WishlistListActions } from './component/wishlist/WishlistListActions';
 import { WishlistEditActions } from './component/wishlist/WishlistEditActions';
+import { Pouch } from '../popup/component/Pouch';
 
 export default function Option(): JSX.Element {
   const [dataProvider, setDataProvider] = React.useState<DataProvider>();
@@ -28,10 +29,10 @@ export default function Option(): JSX.Element {
   if (typeof (dataProvider) == "undefined") return <p>Loading...</p>;
 
   return <Admin dataProvider={dataProvider}>
-    <Resource name="wishlist" icon={Settings} list={() => <ListGuesser actions={<WishlistListActions />} exporter={false} />} edit={() => <Edit actions={<WishlistEditActions  />}><WishlistForm /></Edit>} show={ShowGuesser} create={() => <Create><WishlistForm /></Create>} />
+    <Resource name="wishlist" icon={Settings} list={() => <ListGuesser actions={<WishlistListActions />} exporter={false} />} edit={() => <Edit actions={<WishlistEditActions  />}><WishlistForm /></Edit>} show={(props)=><ShowGuesser actions={<WishlistEditActions  />} {...props}/>} create={() => <Create><WishlistForm /></Create>} />
     <CustomRoutes>
-        <Route path="/import" element={<ImportWishlist />} />
+      <Route path="/import" element={<ImportWishlist />} />
     </CustomRoutes>
-    {wishlists.map(wishlist => <Resource key={wishlist.id} options={{ label: `Wishlist ${wishlist.name}` }} name={wishlist.id} list={BookmarkList}/>)}
+    {wishlists.map(wishlist => <Resource icon={()=><Pouch wishlist={wishlist} dataProvider={dataProvider} refresh={true}/>} key={wishlist.id} options={{ label: `Wishlist ${wishlist.name}` }} name={wishlist.id} list={BookmarkList}/>)}
   </Admin>
 }

@@ -4,7 +4,6 @@ import { AddCurrentTab } from './component/AddCurrentTab';
 import { DataProvider, GetListParams  } from 'react-admin';
 import startDataProvider from './lib/ra-data-local-combined';
 import { Wishlist } from "./types";
-import { Pouch } from "./component/Pouch";
 
 export default function Popup(): JSX.Element {
   const [wishlists, setWishlists] = React.useState<Wishlist[]>([]);
@@ -51,7 +50,6 @@ export default function Popup(): JSX.Element {
           <div className="flex space-x-1 mb-6 text-sm font-medium">
             <AddCurrentTab wishlist={wishlist} dataProvider={dataProvider}/>
             <div className="flex-col">
-              <Pouch wishlist={wishlist} dataProvider={dataProvider}/>
               <a
                 href={`/options/index.html#/${wishlist.id}`}
                 target="_blank"
