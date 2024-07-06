@@ -3,7 +3,6 @@ import {
     DataProvider,
     GetListParams,
     GetOneParams,
-    GetListResult,
     GetManyParams,
     GetManyResult,
     UpdateResult,
@@ -43,7 +42,7 @@ export default (): DataProvider => {
 
     /* eslint-disable @typescript-eslint/no-explicit-any */ 
     return {
-        getList: <RecordType extends RaRecord = any>(
+        getList: (
             resource: string,
             params: GetListParams
         ) => {
@@ -56,33 +55,31 @@ export default (): DataProvider => {
             if (field === 'id') field = '_id'
             if(params.filter) {
                 for (const [key, value] of Object.entries(params.filter)) {
-                    query.selector[key] = { $eq: value }
+                    if (typeof( query.selector) == "undefined") {
+                        query.selector = {};
+                    }
+                    if (value) {
+                        query.selector[key] = { $regex: value }
+                    }
                 }
             }
-            const result: GetListResult<RecordType> = { data: [], total: 0 };
-
-
+            
             let search;
             if (typeof (query.selector) != "undefined") {
-                search = getStoreByName(resource).find({
-                    ...query,
-                    sort: [{[field]: (order.toLowerCase())}],
-                    limit: perPage,
-                    skip: ((page - 1) * perPage)
-                });
+                    search = getStoreByName(resource).find({
+                        ...query,
+                        sort: [{[field]: (order.toLowerCase())}],
+                    }).then(manyResp=>{return {
+                        total : manyResp.docs.length,
+                        data : manyResp.docs.slice((page - 1) * perPage, page * perPage)
+                    }});
             } else {
                 search = getStoreByName(resource).allDocs({
                     include_docs: true, limit: perPage, skip: ((page - 1) * perPage)}).then((manyResp)=>{
-                        return {docs:manyResp.rows.filter(row=>row.doc!=null&&typeof(row.doc)!="undefined").map(row=>row.doc)};
+                        return {total:manyResp.total_rows, data:manyResp.rows.filter(row=>row.doc!=null&&typeof(row.doc)!="undefined").map(row=>row.doc)};
                     })
             }
-            return search.then(pagedListResp=>{
-                result.data = pagedListResp.docs;
-                return getStoreByName(resource).info();
-            }).then((info)=>{
-                result.total = info.doc_count;
-                return result;
-            });
+            return search;
         },
         getOne: <RecordType extends RaRecord = any> (
             resource: string,

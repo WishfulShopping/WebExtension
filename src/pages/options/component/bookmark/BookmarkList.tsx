@@ -1,8 +1,9 @@
 import React, { ReactElement } from 'react';
-import { ListBase, WithListContext, DeleteWithConfirmButton, Title, ListToolbar, Pagination } from 'react-admin';
+import { WithListContext, DeleteWithConfirmButton, Pagination, List } from 'react-admin';
 import { Card, CardContent, Container, Typography, CardActionArea } from '@mui/material';
+import { PostFilterSidebar } from './list/PostFilterSidebar';
 const cardStyle = {
-    width: 300,
+    width: "30%",
     minHeight: 300,
     margin: '0.5em',
     display: 'inline-block',
@@ -11,19 +12,20 @@ const cardStyle = {
 export const BookmarkList  = ({
     title,
     filters,
-    actions,
     resource
 }:{
     title:ReactElement,
     filters:ReactElement,
-    actions:ReactElement,
     resource:string}) => (
-    <ListBase>
-        <Title title={title}/>
-        <ListToolbar
-            filters={filters}
-            actions={actions}
-        />
+    <List 
+        title={title}
+        aside={<PostFilterSidebar resource={resource}/>}
+        filters={filters}
+        actions={<></>}
+        exporter={false}
+        perPage={9}
+        pagination={<Pagination rowsPerPageOptions={[6, 9, 12, 15]} />
+    }>
         <Container>
             <WithListContext render={({ isLoading, data }) => (
                     !isLoading && typeof(data) != "undefined" && (<>
@@ -49,6 +51,5 @@ export const BookmarkList  = ({
                 !isLoading && <Typography>{total} results</Typography>
             )} />
             </Container>
-            <Pagination />
-    </ListBase>
+    </List>
 );
