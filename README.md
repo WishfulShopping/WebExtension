@@ -38,6 +38,14 @@ You can supply the url such as http://127.0.0.1:5984/my-database/ of a couchdb d
 
 You can supply a url such as http://127.0.0.1:5984/my-database/ of a couchdb database alongside the other settings of an existing wishlist. The couchdb database can be automatically created and data will be synchronised with this database.
 
+## Demo : Static website to share your lists
+
+You must use the share url for someone to import the data in their browser, otherwise they won't see anything. You see only what is stored in your browser.
+
+![Share button on wishlist management page](./docs/Screenshot-4.png)
+
+You can share your data to everyone using the share button to generate an url that look like https://wishfulshopping.github.io/WebExtension/?url=http://127.0.0.1:5984/my-database/#/import No data is stored on this static website.
+
 
 ## Custom queries
 
