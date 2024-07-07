@@ -44,7 +44,8 @@ export const ImportWishlist = () => {
                         name:name,
                         url:url.origin + url.pathname,
                         username:url.username,
-                        password:url.password
+                        password:url.password,
+                        need_authentification:!!url.username
                     }
                 }, {returnPromise:true});
                 if (!result || !result.then) {
