@@ -12,7 +12,7 @@ If the user creates additional wishlists this software will store them locally i
 
 ## This software uses user data
 
-The user can access and manage the scraped content within the wishlist option page. It is the purpose of this software to allow the user to compare all scraped the content and keep it for future reference.
+The user can access and manage the scraped content within the wishlist option page. It is the purpose of this software to allow the user to compare all scraped content and keep it for future reference.
 
 ## This software has a login functionality
 
