@@ -46,6 +46,8 @@ You must use the share url for someone to import the data in their browser, othe
 
 You can share your data to everyone using the share button to generate an url that look like https://wishfulshopping.github.io/WebExtension/?url=http://127.0.0.1:5984/my-database/#/import No data is stored on this static website.
 
+You can come back to the demo with the direct link https://wishfulshopping.github.io/WebExtension/
+
 
 ## Custom queries
 
