@@ -149,6 +149,9 @@ export interface ManifestTypeV2 {
     dictionary_format?: string;
     dictionary_path?: string;
   };
+  browser_specific_settings?: {
+    gecko?: {id: string}
+  };
   storage?: {
     managed_schema?: string;
   };

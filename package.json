@@ -1,7 +1,7 @@
 {
   "name": "wishful-shopping-webextension",
   "displayName": "Wishful Shopping",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Bookmark page metadata and manage them in Pouchdb",
   "license": "MIT",
   "repository": {

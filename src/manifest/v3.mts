@@ -20,7 +20,12 @@ const manifest: ManifestTypeV3 = {
   ],
   permissions: [
     "storage"
-  ]
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{79781150-38ba-41f4-85da-7b489c97b05a}"
+    }
+  }
 };
 
 function getManifestV3(pageDirMap: { [x: string]: any }): ManifestTypeV3 {
