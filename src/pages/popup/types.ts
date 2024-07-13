@@ -8,6 +8,10 @@ export type Wishlist = {
     password: string,
 };
 
-export type Bookmark = { 
+export type BookmarkKeyValues = { 
     [x:string]:string
+};
+
+export type Bookmark = BookmarkKeyValues & { 
+    images?:string[]
 };
