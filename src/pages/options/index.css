@@ -5,3 +5,9 @@
   75% { transform: translateX(10px) }
   100% { transform: translateX(0) }
   }
+  .change-category-chip div, .change-category-chipundefined div{
+    visibility: hidden;
+  }
+  .change-category-chip:hover div, .change-category-chipundefined:hover div{
+    visibility: visible;
+  }

@@ -61,6 +61,12 @@ export default (): DataProvider => {
                     if (value) {
                         query.selector[key] = { $regex: value }
                     }
+                    if (value == "<undefined>") {
+                        query.selector[key] = { $exists: false }
+                    }
+                    if (value == "<empty>") {
+                        query.selector[key] = "";
+                    }
                 }
             }
             

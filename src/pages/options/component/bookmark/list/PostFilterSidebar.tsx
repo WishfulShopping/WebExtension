@@ -1,4 +1,5 @@
 import { SavedQueriesList, FilterLiveSearch, FilterList, FilterListItem, useDataProvider, useResourceContext } from 'react-admin';
+
 import { Card, CardContent } from '@mui/material';
 import { LocalOffer } from '@mui/icons-material';
 import { useMemo, useState } from 'react';
@@ -10,11 +11,12 @@ export const PostFilterSidebar = () => {
     useMemo(()=>{
         if (resource) {
             dataProvider.getList(resource, {pagination:{page:1,perPage:1000}})
-                        .then(({data}) => data.map(product=>product?.url?.match(/[^(?:http://|www.|https://)]([^/]+)/i)[0]).filter(id=>id))
-                        .then((data)=>{
+                        .then(({data}) => {
                             setFilterItem({
-                                url:Object.groupBy(data, url => url),
+                                url:Object.groupBy(data.map(product=>product?.url?.match(/[^(?:http://|www.|https://)]([^/]+)/i)[0]).filter(id=>id), url => url),
+                                category:Object.groupBy(data.map(product=>product?.category), category => category)
                             });
+                            return data;
                         })
         }
     }, [dataProvider, resource]);
@@ -26,9 +28,10 @@ export const PostFilterSidebar = () => {
                 {Object.keys(filterItems).map((attributeCode, rowId) => {
                     return (<FilterList key={rowId} label={attributeCode} icon={<LocalOffer />}>
                          {Object.entries(filterItems[attributeCode]).map(([value, stats], filterRowId) => {
+                            const rectifiedValue = (value != "undefined" ? value : "<undefined>") || "<empty>";
                             const valueObject = {};
-                            valueObject[attributeCode] = value;
-                            return (<FilterListItem value={valueObject} key={filterRowId} label={value + ` (${stats.length})`} /> )})
+                            valueObject[attributeCode] = rectifiedValue;
+                            return (<FilterListItem value={valueObject} key={filterRowId} label={rectifiedValue + ` (${stats.length})`} /> )})
                 }
                 </FilterList>)})}
             </CardContent>

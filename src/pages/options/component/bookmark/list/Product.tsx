@@ -5,6 +5,7 @@ import {useDraggable} from '@dnd-kit/core';
 import {CSS} from '@dnd-kit/utilities';
 import { Bookmark } from '@src/pages/popup/types';
 import { ChangePicture } from './ChangePicture';
+import { ChangeCategory } from './ChangeCategory';
 
 const cardStyle = {
     width: "30%",
@@ -26,6 +27,7 @@ export const Product  = ({
             <CardContent style={{minHeight:cardStyle.minHeight, float:"left", width: "50%", backgroundImage: `url("${product.image ?? product["og:image"]}")`, backgroundSize: "cover", backgroundPosition:"center", backgroundRepeat:"no-repeat"}}>
                 <div style={{cursor:'grab', margin: "-1em 0em 0em -1em", textAlign:"right"}} ref={setNodeRef} {...listeners} {...attributes} ><WavingHand titleAccess="Drag to another wishlist" style={{height:"0.6em", color:"rgb(25, 118, 210)"}} /></div>
                 <ChangePicture record={product}/>
+                <ChangeCategory record={product}/>
             </CardContent>                                    
                                         
             <CardActionArea href={product.url} style={{width: "50%", marginLeft:"51%"}}>
