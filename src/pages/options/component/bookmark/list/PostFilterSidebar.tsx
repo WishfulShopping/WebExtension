@@ -14,7 +14,8 @@ export const PostFilterSidebar = () => {
                         .then(({data}) => {
                             setFilterItem({
                                 url:Object.groupBy(data.map(product=>product?.url?.match(/[^(?:http://|www.|https://)]([^/]+)/i)[0]).filter(id=>id), url => url),
-                                category:Object.groupBy(data.map(product=>product?.category), category => category)
+                                category:Object.groupBy(data.map(product=>product?.category), category => category),
+                                updatedAt:Object.groupBy(data.map(product=>product?.updatedAt?.substring(0,7) || '<undefined>').filter(updatedAt => updatedAt), updatedAt => updatedAt)
                             });
                             return data;
                         })
