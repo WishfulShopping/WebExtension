@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["temp_stylePlugin:ni:sha-256;sDtI-ujZZlbk-x1CNL-N3Fogytg7eU6VZ4mtzdHrRu4"],
+  "sourcesContent": ["@keyframes tilt-n-move-shaking {\n    0% { transform: translateX(0) }\n  25% { transform: translateX(10px) }\n  50% { transform: translateX(-10px) }\n  75% { transform: translateX(10px) }\n  100% { transform: translateX(0) }\n  }\n  .change-category-chip div, .change-category-chipundefined div{\n    visibility: hidden;\n  }\n  .change-category-chip:hover div, .change-category-chipundefined:hover div{\n    visibility: visible;\n  }"],
+  "mappings": "AAAA,kCACS,2BACD,8BACA,+BACA,6BACC,wBAEP,6DACE,kBAEF,yEACE",
+  "names": []
+}
