@@ -219,9 +219,6 @@ export interface ManifestTypeV3 {
         dictionary_path?: string | undefined;
       }
     | undefined;
-  browser_specific_settings?: {
-    gecko?: {id: string}
-  };
   storage?:
     | {
         managed_schema: string;
